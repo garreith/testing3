@@ -9,9 +9,13 @@ function App() {
 
   const [list2, setL2] = useState([])
 
+  const [list3, setL3] = useState([])
+
   const [var1, setV1] = useState('')
 
   const [var2, setV2] = useState(0)
+
+  const [var3, setV3] = useState(0)
 
   const [show, setShow] = useState()
 
@@ -102,23 +106,31 @@ function App() {
   const times = () =>{
     setL1(prevL1 => [...prevL1, ' x '])
     setL2(prevL2 => [...prevL2, var1])
-    setL2(prevL2 => [...prevL2, 'x'])
+    setL2(prevL2 => [...prevL2, '*'])
     setV1('')
     setV2(var2 + 1)
   }
 
   const equals = () =>{
+    setV2(var2 + 1)
+    setL2(prevL2 => [...prevL2, var1])
+    let v1 = ''
     for(let x = 0; x < list2.length; x++){
-      for(let y = 0; y < list2.length; y++){
-        if (list2[y] == 'x'){
-          
-        }
+      if(x == list2.length){
+        v1 += var1
       }
+      else{
+        v1 += list2[x] + ' '
+      }
+      console.log(v1)
     }
+    setL1(eval(v1))
+    setV2(var2 + 1)
+    setL2([])
+    setV1('')
   }
 
-  useEffect(() => {setShow(list1), console.log(list2)}, [var2])
-  /*useEffect(() => {console.log(list1)}, [var2])*/
+  useEffect(() => {setShow(list1), console.log(list2), setL2(list2)}, [var2])
 
   return (
     <>
@@ -153,7 +165,7 @@ function App() {
         <button>±</button>
         <button onClick={zero}>0</button>
         <button>.</button>
-        <button>=</button>
+        <button onClick={equals}>=</button>
       </div>
     </>
   )
